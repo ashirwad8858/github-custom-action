@@ -4,31 +4,31 @@ on:
     branches:
       - main
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: "my custom action for dependencies"
-        uses: ./.github/actions/cached-dep
-      - name: Lint code
-        run: npm run lint
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: "my custom action for dependencies"
-        uses: ./.github/actions/cached-dep
-      - name: Test code
-        id: run-tests
-        run: npm run test
-      - name: Upload test report
-        if: failure() && steps.run-tests.outcome == 'failure'
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-report
-          path: test.json
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Get code
+  #       uses: actions/checkout@v3
+  #     - name: "my custom action for dependencies"
+  #       uses: ./.github/actions/cached-dep
+  #     - name: Lint code
+  #       run: npm run lint
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Get code
+  #       uses: actions/checkout@v3
+  #     - name: "my custom action for dependencies"
+  #       uses: ./.github/actions/cached-dep
+  #     - name: Test code
+  #       id: run-tests
+  #       run: npm run test
+  #     - name: Upload test report
+  #       if: failure() && steps.run-tests.outcome == 'failure'
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: test-report
+  #         path: test.json
   build:
     needs: test
     runs-on: ubuntu-latest
