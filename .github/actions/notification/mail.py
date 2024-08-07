@@ -25,11 +25,14 @@ def send_email(smtp_server, smtp_port, username, password, from_email, to_email)
 
     # Send the email
     try:
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()
-            server.login(username, password)
-            server.send_message(msg)
-            print("Email sent successfully!")
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(username, password)
+        server.send_message(msg)
+        server.quit()
+        print("Email sent successfully!")
     except Exception as e:
         print(f"Failed to send email: {e}")
 
