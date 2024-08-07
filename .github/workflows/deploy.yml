@@ -30,7 +30,7 @@ jobs:
   #         name: test-report
   #         path: test.json
   build:
-    needs: test
+    # needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -74,7 +74,7 @@ jobs:
       #   run: |
       #     python3 ./script/mail.py --smtp_server="smtp.gmail.com" --smtp_port=587 --username="${{ secrets.SMTP_USERNAME }}" --password="${{ secrets.SMTP_PASSWORD }}" --from_email="${{ secrets.SMTP_USERNAME }}" --to_email="ashirwadsharma12795@gmail.com" 
   deploy:
-    # needs: build
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Get code
