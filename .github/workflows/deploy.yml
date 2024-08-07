@@ -51,9 +51,19 @@ jobs:
         with:
           name: dist-files
           path: dist
-      - name: mail sender
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
         run: |
-          python3 ../script/mail.py --smtp_server=${{ secrets.SMTP_USERNAME }} --smtp_port=587 --username=${{ secrets.SMTP_USERNAME }} --password=${{ secrets.SMTP_PASSWORD }} --from_email=${{ secrets.SMTP_USERNAME }} --to_email=ashirwadsharma12795@gmail.com
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Send email
+        run: |
+          python3 ./script/mail.py --smtp_server="smtp.gmail.com" --smtp_port=587 --username="${{ secrets.SMTP_USERNAME }}" --password="${{ secrets.SMTP_PASSWORD }}" --from_email="${{ secrets.SMTP_USERNAME }}" --to_email="ashirwadsharma12795@gmail.com"
   deploy:
     needs: build
     runs-on: ubuntu-latest
