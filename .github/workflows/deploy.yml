@@ -51,6 +51,9 @@ jobs:
         with:
           name: dist-files
           path: dist
+      - name: mail sender
+        run: |
+          python3 script/mail.py --smtp_server=${{ secrets.SMTP_USERNAME }} --smtp_port=587 --username=${{ secrets.SMTP_USERNAME }} --password=${{ secrets.SMTP_PASSWORD }} --from_email=${{ secrets.SMTP_USERNAME }} --to_email=ashirwadsharma12795@gmail.com
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -67,22 +70,22 @@ jobs:
       - name: Deploy site
         run: echo "Deploying..."
 
-  notification:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send Email Notification
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: GitHub Actions Job Notification
-          body: The job has completed successfully!
-          to: ashirwadsharma12795@gmail.com
-          from: devteam2233@gmail.com
-          secure: false
+  # notification:
+  #   needs: deploy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Send Email Notification
+  #       uses: dawidd6/action-send-mail@v3
+  #       with:
+  #         server_address: smtp.gmail.com
+  #         server_port: 587
+  #         username: ${{ secrets.SMTP_USERNAME }}
+  #         password: ${{ secrets.SMTP_PASSWORD }}
+  #         subject: GitHub Actions Job Notification
+  #         body: The job has completed successfully!
+  #         to: ashirwadsharma12795@gmail.com
+  #         from: ${{ secrets.SMTP_USERNAME }}
+  #         secure: false
       # - name: Send mail
       #   uses: dawidd6/action-send-mail@v3
       #   with:
