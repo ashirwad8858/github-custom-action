@@ -61,7 +61,7 @@ jobs:
       #     python -m pip install --upgrade pip
       #     pip install -r requirements.txt
       - name: Send email using custom action
-        uses: ./.github/actions/notification
+        uses: ./.github/action/notification
         with:
           smtp_server: ${{ secrets.SMTP_SERVER }}
           smtp_port: 587
