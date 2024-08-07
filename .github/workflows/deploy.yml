@@ -51,19 +51,28 @@ jobs:
         with:
           name: dist-files
           path: dist
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
+      # - name: Install Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: '3.x'
 
       # - name: Install dependencies
       #   run: |
       #     python -m pip install --upgrade pip
       #     pip install -r requirements.txt
-
-      - name: Send email
-        run: |
-          python3 ./script/mail.py --smtp_server="smtp.gmail.com" --smtp_port=587 --username="${{ secrets.SMTP_USERNAME }}" --password="${{ secrets.SMTP_PASSWORD }}" --from_email="${{ secrets.SMTP_USERNAME }}" --to_email="ashirwadsharma12795@gmail.com"
+      - name: Send email using custom action
+        uses: ./.github/actions/notification
+        with:
+          smtp_server: ${{ secrets.SMTP_SERVER }}
+          smtp_port: 587
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          from_email: ${{ secrets.SMTP_USERNAME }}
+          to_email: ashirwadsharma12795@gmail.com
+          # attachments: " path/to/attachment2"
+      # - name: Send email #--attachments path
+      #   run: |
+      #     python3 ./script/mail.py --smtp_server="smtp.gmail.com" --smtp_port=587 --username="${{ secrets.SMTP_USERNAME }}" --password="${{ secrets.SMTP_PASSWORD }}" --from_email="${{ secrets.SMTP_USERNAME }}" --to_email="ashirwadsharma12795@gmail.com" 
   deploy:
     needs: build
     runs-on: ubuntu-latest

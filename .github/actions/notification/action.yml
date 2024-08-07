@@ -1,0 +1,37 @@
+name: 'Send Email'
+description: 'Send an email using a Python script.'
+inputs:
+  smtp_server:
+    description: 'SMTP server address'
+    required: true
+  smtp_port:
+    description: 'SMTP server port'
+    required: true
+  username:
+    description: 'SMTP server username'
+    required: true
+  password:
+    description: 'SMTP server password'
+    required: true
+  from_email:
+    description: 'Email address of the sender'
+    required: true
+  to_email:
+    description: 'Email address of the recipient'
+    required: true
+  attachments:
+    description: 'List of file paths to attach'
+    required: false
+    default: ''
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.smtp_server }}
+    - ${{ inputs.smtp_port }}
+    - ${{ inputs.username }}
+    - ${{ inputs.password }}
+    - ${{ inputs.from_email }}
+    - ${{ inputs.to_email }}
+    - ${{ inputs.attachments }}
