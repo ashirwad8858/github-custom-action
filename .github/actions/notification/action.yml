@@ -19,10 +19,10 @@ inputs:
   to_email:
     description: 'Email address of the recipient'
     required: true
-  attachments:
-    description: 'List of file paths to attach'
-    required: false
-    default: ''
+  # attachments:
+  #   description: 'List of file paths to attach'
+  #   required: false
+  #   default: ''
 
 runs:
   using: "composite"
@@ -43,5 +43,5 @@ runs:
 
     - name: Run mail script
       run: |
-        python .github/actions/notification/mail.py --smtp_server="${{ inputs.smtp_server }}" --smtp_port="${{ inputs.smtp_port }}" --username="${{ inputs.username }}" --password="${{ inputs.password }}" --from_email="${{ inputs.from_email }}" --to_email="${{ inputs.to_email }}" --attachments ${{ inputs.attachments }}
+        python .github/actions/notification/mail.py --smtp_server="${{ inputs.smtp_server }}" --smtp_port="${{ inputs.smtp_port }}" --username="${{ inputs.username }}" --password="${{ inputs.password }}" --from_email="${{ inputs.from_email }}" --to_email="${{ inputs.to_email }}" 
       shell: bash
